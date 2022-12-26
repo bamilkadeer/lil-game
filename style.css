@@ -1,0 +1,21 @@
+
+
+
+.box{
+    --x:1;
+    --y:1;
+display: flex;
+
+top: var(--x);
+left: var(--y);
+
+
+color: white;
+background-color: black;
+width: 100px;
+height: 100px;
+
+
+align-items: center;
+justify-content: center;
+}
