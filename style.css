@@ -13,9 +13,11 @@
 
 
 body{
-
+padding: 0;
+margin:0;
     height: 100vh;
 cursor: cell;
+overflow: hidden;
 }
 
 
@@ -24,8 +26,8 @@ cursor: cell;
     height: var(--height);
     position: absolute;
     overflow:hidden;
-    left: 100px;
-    top: 100px;
+    left: 50vw;
+    top: 50vh;
  }
 
 
@@ -65,15 +67,15 @@ cursor: cell;
 
 
  .camera {
-    width: calc(var(--pixel-size) * 160);
-    height: calc(var(--pixel-size) * 144);
+    width: 100vw;
+    height: 100vh;
     overflow: hidden;
-    background: black;
+    background: beige;
     position:absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border:9px solid var(--bg);
+
  }
  
  .map {
@@ -110,16 +112,14 @@ justify-content: center;
 
 
 .sword{
-position: absolute;
+    position: absolute;
     color: black;
-    background-color: teal;
+    background-color:  rgb(135, 160, 235);
     width: 20px;
     height: 100px;
-    top: 45px;
-    left: 120px;
-    transform: translate(-50%, -50%);
+ 
     transform-origin: bottom center;
-    z-index: ;
+
 
 }
 
@@ -136,6 +136,30 @@ position: absolute;
 
 }
 
+.point2{
+
+
+    position: absolute;
+    width:10px;
+    height: 10px;
+    background-color: red;
+    top:500px;
+    left:500px;
+
+}
+
+.arrow{
+
+
+    position: absolute;
+    width:10px;
+    height: 10px;
+    background-color: black;
+    top:500px;
+    left:500px;
+
+}
+
 .follow{
 
 
@@ -143,8 +167,8 @@ position: absolute;
     width:30px;
     height: 30px;
     background-color: rgb(135, 160, 235);
-    top:50px;
-    left:100px;
+    top:40vh;
+    left:48vw;
 
     transition: all .5s ease-out;
 
@@ -167,3 +191,15 @@ position: absolute;
 
 }
 
+.swordbox{
+
+
+}
+
+.swordbox{
+    position:absolute;
+        top:50vh;
+        left:50vw;
+        transform: translate(50%, -1000%);
+    
+    }

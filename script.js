@@ -13,6 +13,8 @@ let mush = document.querySelector('.follow');
 
 let bullet = document.querySelector('.projectile');
 
+let arrow = document.querySelector('.arrow');
+
 
 
 let speed= 5;
@@ -29,6 +31,16 @@ let bx;
 let by;
 let bulletCheck = 0;
 
+
+let arrowx = 0;
+let arrowy = 0;
+
+let counter = 0;
+let counter2 = 0;
+
+let velocityX;
+let velocityY;
+let multiplier = 15;
 //Set up the game loop
 
  
@@ -38,8 +50,22 @@ let bulletCheck = 0;
    //console.log(camera.offsetWidth) 
   // console.log(camera.offsetHeight) 
 
+// if (counter2 === 1){
+//    arrow.style.transform = `translate3d( ${arrowx + x}px, ${arrowy + y}px, 0 )`;
+// counter2=0;
+// }
+  if(counter > 0 ){
 
-
+ arrowx = arrowx + velocityX;
+ arrowy = arrowy + velocityY ;
+   arrow.style.transform = `translate3d( ${arrowx}px, ${arrowy}px, 0 )`;
+   counter = counter - 4;
+  }
+if(counter <= 0){
+arrowx=x;
+arrowy=y;
+   arrow.style.transform = `translate3d( ${arrowx}px, ${arrowy}px, 0 )`;
+}
        if (right === 1) {x += speed;}
        if (left === 1) {x -= speed;}
        if (up === 1) {y -= speed;}
@@ -211,5 +237,40 @@ function rotatePointer(e) {
        pointer.style.transform = 'rotate('+degrees+'deg)';
 }
 
+
 window.addEventListener('mousemove', rotatePointer);
 
+
+
+
+addEventListener('click', (event) =>{
+
+   if(counter <= 0){
+
+      
+
+const angle =Math.atan2(event.clientY - 500 , event.clientX - 500 )
+
+const velocity = {
+x: Math.cos(angle),
+y: Math.sin(angle)
+}
+
+
+
+
+velocityX = velocity.x * multiplier;
+velocityY = velocity.y * multiplier;
+counter = 100;
+counter2= 1;
+   }
+})
+
+
+function projectile(x,y){
+
+   
+   arrow.style.transform = `translate3d( ${x}px, ${y}px, 0 )`;
+
+
+}
