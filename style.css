@@ -9,6 +9,9 @@
     --height: calc(var(--h)* var(size));
     --width: 256px;
     --height: 57px;
+
+
+    
  }
 
 
@@ -26,8 +29,8 @@ overflow: hidden;
     height: var(--height);
     position: absolute;
     overflow:hidden;
-    left: 50vw;
-    top: 50vh;
+    left:calc( 50vw - calc(var(--width)/10));
+    top: calc( 50vh - calc(var(--height)/2));
  }
 
 
@@ -72,11 +75,10 @@ overflow: hidden;
     overflow: hidden;
     background: beige;
     position:absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
 
  }
+ 
  
  .map {
     image-rendering: pixelated;
@@ -85,68 +87,43 @@ overflow: hidden;
     width: calc(13 * var(--grid-cell));
     height: calc(10 * var(--grid-cell));
     position: relative;
+    
  }
  
 
 
 
 
- .box{
-    --x:1;
-    --y:1;
-display: flex;
-
-top: var(--x);
-left: var(--y);
-
-
-color: white;
-background-color: black;
-width: 100px;
-height: 100px;
-
-
-align-items: center;
-justify-content: center;
-}
 
 
 .sword{
     position: absolute;
     color: black;
-    background-color:  rgb(135, 160, 235);
-    width: 20px;
-    height: 100px;
+    /* background-color:  rgb(135, 160, 235); */
+    width: 50px;
+    height: 50px;
  
     transform-origin: bottom center;
+    background-image: url("bow.png");
+    image-rendering: pixelated;
+    background-size: 100%;
 
 
 }
+.swordbox{
+    position:absolute;
+        top:calc(50vh - 50px);
+        left:calc(50vw - 25px);
+      
+        transform-origin: bottom center;
+   
+        width: 20px;
+        height: 100px;
+        z-index: 9;
+    }
 
 
-.point{
 
-
-    position: absolute;
-    width:10px;
-    height: 10px;
-    background-color: red;
-    top:200px;
-    left:100px;
-
-}
-
-.point2{
-
-
-    position: absolute;
-    width:10px;
-    height: 10px;
-    background-color: red;
-    top:500px;
-    left:500px;
-
-}
 
 .arrow{
 
@@ -155,8 +132,8 @@ justify-content: center;
     width:10px;
     height: 10px;
     background-color: black;
-    top:500px;
-    left:500px;
+    top:50vh;
+    left:50vw;
 
 }
 
@@ -175,31 +152,22 @@ justify-content: center;
 }
 
 
-.projectile{
+
+.enemy{
 
 
     position: absolute;
     width:30px;
     height: 30px;
-    background-color: rgb(46, 51, 67);
-    top:50px;
-    left:100px;
+    background-color: rgb(201, 62, 136);
+    top: calc(50vh + 50px);
+    left:calc(50vw + 50px);
   
 
-    transition: all .2s ease-out;
+  
 
 
 }
 
-.swordbox{
 
 
-}
-
-.swordbox{
-    position:absolute;
-        top:50vh;
-        left:50vw;
-        transform: translate(50%, -1000%);
-    
-    }

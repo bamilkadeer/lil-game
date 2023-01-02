@@ -15,6 +15,10 @@ let bullet = document.querySelector('.projectile');
 
 let arrow = document.querySelector('.arrow');
 
+let enemy = document.querySelector('.enemy');
+
+let viewportHeight = window.innerHeight;
+let viewportWidth = window.innerWidth;
 
 
 let speed= 5;
@@ -45,7 +49,26 @@ let multiplier = 15;
 
  
  const placeCharacter = () => {
+   if (right === 1) {x += speed;}
+   if (left === 1) {x -= speed;}
+   if (up === 1) {y -= speed;}
+   if (down === 1) {y += speed;}
 
+    viewportHeight = window.innerHeight;
+    viewportWidth = window.innerWidth;
+    enemy.style.backgroundColor = " black";
+
+
+    //50s are location and 30s are width and height
+    if (arrowx + 10 >=  50      &&  
+      arrowx        <=  50 + 30 &&
+      arrowy + 10   >=  50      &&
+      arrowy        <=  50 + 30  ){
+enemy.style.backgroundColor = "red";
+      console.log('hit');
+      
+       }
+       
 
    //console.log(camera.offsetWidth) 
   // console.log(camera.offsetHeight) 
@@ -66,11 +89,7 @@ arrowx=x;
 arrowy=y;
    arrow.style.transform = `translate3d( ${arrowx}px, ${arrowy}px, 0 )`;
 }
-       if (right === 1) {x += speed;}
-       if (left === 1) {x -= speed;}
-       if (up === 1) {y -= speed;}
-       if (down === 1) {y += speed;}
-
+   
        if(bulletCheck === 1){
          bx = mouseX;
          by = mouseY;
@@ -122,7 +141,7 @@ window.addEventListener('mousemove', (event) =>{
  
  window.addEventListener('keydown', (event) => {
    direction = event.key;
-   console.log(direction);
+   
     switch (event.key){
 
             case 'd':
@@ -230,8 +249,8 @@ function rotatePointer(e) {
        mouseY = e.clientY;
  
 
-   var centerY = 200,
-   centerX = 100,
+   var centerY = viewportHeight/2,
+   centerX = viewportWidth/2,
        radians = Math.atan2(mouseX - centerX, mouseY - centerY),
        degrees = (radians * (180 / Math.PI) * -1) + 180; 
        pointer.style.transform = 'rotate('+degrees+'deg)';
@@ -249,7 +268,7 @@ addEventListener('click', (event) =>{
 
       
 
-const angle =Math.atan2(event.clientY - 500 , event.clientX - 500 )
+const angle =Math.atan2(event.clientY - viewportHeight/2 , event.clientX - viewportWidth/2 )
 
 const velocity = {
 x: Math.cos(angle),
@@ -263,6 +282,7 @@ velocityX = velocity.x * multiplier;
 velocityY = velocity.y * multiplier;
 counter = 100;
 counter2= 1;
+
    }
 })
 
@@ -270,7 +290,11 @@ counter2= 1;
 function projectile(x,y){
 
    
-   arrow.style.transform = `translate3d( ${x}px, ${y}px, 0 )`;
+ if (arrowx + 10 >= bx + x + 30){
+
+console.log("hit");
+
+ }
 
 
 }
