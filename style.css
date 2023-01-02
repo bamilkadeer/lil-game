@@ -1,0 +1,205 @@
+:root {
+    --pixel-size: 2px;
+    --grid-cell: calc( var(--pixel-size) * 16);
+    --bg: #9fa7e4;
+    --size: 1;
+    --w: 256px;
+    --h: 57px;
+    --width: calc(var(--w)* var(size));
+    --height: calc(var(--h)* var(size));
+    --width: 256px;
+    --height: 57px;
+ }
+
+
+body{
+padding: 0;
+margin:0;
+    height: 100vh;
+cursor: cell;
+overflow: hidden;
+}
+
+
+.character {
+    width:calc( var(--width) / 4);
+    height: var(--height);
+    position: absolute;
+    overflow:hidden;
+    left: 50vw;
+    top: 50vh;
+ }
+
+
+ .character_spritesheet {
+    position: absolute;
+    background: url("https://i.ibb.co/19CYFMD/sprite-sheet.png") ;
+    background-size: 100%;
+    width: var(--width);
+    height: var(--height);
+    image-rendering: pixelated;
+ }
+
+
+
+
+.character[facing="d"] .character_spritesheet {
+    background-position-y: calc( var(--pixel-size) * -29 );
+ }
+ .character[facing="w"] .character_spritesheet {
+    background-position-y: calc( var(--pixel-size) * -58 );
+ }
+ .character[facing="a"] .character_spritesheet {
+    background-position-y: calc( var(--pixel-size) * -87 );
+ }
+ .character[walking="true"] .character_spritesheet {
+    animation: walkAnimation 0.8s steps(4) infinite; 
+ }
+ 
+ @keyframes walkAnimation {
+   from {
+     transform: translate3d(0%,0%,0);
+   }
+   to {
+     transform: translate3d(-100%,0%,0);
+   }
+ }
+
+
+ .camera {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: beige;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+ }
+ 
+ .map {
+    image-rendering: pixelated;
+    background-image: url("https://assets.codepen.io/21542/CameraDemoMap.png");
+    background-size: 100%;
+    width: calc(13 * var(--grid-cell));
+    height: calc(10 * var(--grid-cell));
+    position: relative;
+ }
+ 
+
+
+
+
+ .box{
+    --x:1;
+    --y:1;
+display: flex;
+
+top: var(--x);
+left: var(--y);
+
+
+color: white;
+background-color: black;
+width: 100px;
+height: 100px;
+
+
+align-items: center;
+justify-content: center;
+}
+
+
+.sword{
+    position: absolute;
+    color: black;
+    background-color:  rgb(135, 160, 235);
+    width: 20px;
+    height: 100px;
+ 
+    transform-origin: bottom center;
+
+
+}
+
+
+.point{
+
+
+    position: absolute;
+    width:10px;
+    height: 10px;
+    background-color: red;
+    top:200px;
+    left:100px;
+
+}
+
+.point2{
+
+
+    position: absolute;
+    width:10px;
+    height: 10px;
+    background-color: red;
+    top:500px;
+    left:500px;
+
+}
+
+.arrow{
+
+
+    position: absolute;
+    width:10px;
+    height: 10px;
+    background-color: black;
+    top:500px;
+    left:500px;
+
+}
+
+.follow{
+
+
+    position: absolute;
+    width:30px;
+    height: 30px;
+    background-color: rgb(135, 160, 235);
+    top:40vh;
+    left:48vw;
+
+    transition: all .5s ease-out;
+
+}
+
+
+.projectile{
+
+
+    position: absolute;
+    width:30px;
+    height: 30px;
+    background-color: rgb(46, 51, 67);
+    top:50px;
+    left:100px;
+  
+
+    transition: all .2s ease-out;
+
+
+}
+
+.swordbox{
+
+
+}
+
+.swordbox{
+    position:absolute;
+        top:50vh;
+        left:50vw;
+        transform: translate(50%, -1000%);
+    
+    }
