@@ -11,7 +11,8 @@
     --height: 57px;
 
 
-    
+    --bar-fill: #ec290a;
+    --bar-top: #ff3818;
  }
 
 
@@ -119,7 +120,7 @@ overflow: hidden;
    
         width: 20px;
         height: 100px;
-        z-index: 9;
+        z-index: 0;
     }
 
 
@@ -135,6 +136,16 @@ overflow: hidden;
     top:50vh;
     left:50vw;
 
+}
+
+.arrowbox{
+
+    position: absolute;
+    width:10px;
+    height: 100px;
+    border: 2px solid salmon;
+ 
+    transform-origin: bottom center;
 }
 
 .follow{
@@ -160,14 +171,24 @@ overflow: hidden;
     width:30px;
     height: 30px;
     background-color: rgb(201, 62, 136);
-    top: calc(50vh + 50px);
-    left:calc(50vw + 50px);
-  
-
-  
-
+    top: calc(50vh );
+    left:calc(50vw );
 
 }
+
+
+.healthbar{
+    position: absolute;
+    width: 20vw;
+ }
+ .healthbar_fill {
+    width: 100%;
+    fill: var(--bar-fill);
+    transition: width 0.5s ease-in, fill 0.2s linear;
+ }
+ .healthbar_fill-top {
+    fill: var(--bar-top);
+ }
 
 
 
