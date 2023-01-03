@@ -288,6 +288,8 @@ addEventListener('mouseup', (event) =>{
 
 function bowDirection(){
    if(on === 1 ){
+
+      window.addEventListener('mousemove', rotatePointer);
 slow = 2.5;
    if (degrees < 260 && degrees > 90){
 
@@ -333,7 +335,7 @@ function rotatePointer(e) {
 }
 
 
-window.addEventListener('mousemove', rotatePointer);
+
 
 
 

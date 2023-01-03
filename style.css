@@ -30,8 +30,8 @@ overflow: hidden;
     height: var(--height);
     position: absolute;
     overflow:hidden;
-    left:calc( 50vw - calc(var(--width)/10));
-    top: calc( 50vh - calc(var(--height)/2));
+    left:calc( 50vw - calc(var(--width)/10) - 5px);
+    top: calc( 50vh - calc(var(--height)/2) - 10px);
  }
 
 
