@@ -1,7 +1,5 @@
 var health = 100;
 var maxHp = 100;
-let change = 0;
-let button = document.querySelector(".button");
 var fills = document.querySelectorAll(".healthbar_fill");
 
 

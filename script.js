@@ -35,13 +35,19 @@ let enemy = document.querySelector('.enemy');
 let viewportHeight = window.innerHeight;
 let viewportWidth = window.innerWidth;
 
-
+//enemy variables
 let enemySpeedY = 0.02;
 let enemySpeedX = 0.008;
 let enemyY = 0;
 let enemyX = 200;
 
+//mush variables
+let mushSpeedY = 0.09;
+let mushSpeedX = 0.06;
+let mushY = 0;
+let mushX = 0;
 
+//variables for main character
 let speed= 5;
 let slow = 2.5;
 let x = 0;
@@ -57,14 +63,15 @@ let bx;
 let by;
 let bulletCheck = 0;
 
-
+//arrow variables
 let arrowx = 0;
 let arrowy = 0;
 let on = 0;
-
+let arrowDistance = 0;
 let counter = 0;
 let counter2 = 0;
 
+//variables for arrow projectile, multiplier makes it go 15 pixels per frame
 let velocityX;
 let velocityY;
 let multiplier = 15;
@@ -87,8 +94,13 @@ let degrees = 0;
    if (up === 1) {y -= speed - slow;}
    if (down === 1) {y += speed - slow;}
 
+   character.setAttribute("facing", direction);
+    
+   bowDirection()
+
     viewportHeight = window.innerHeight;
     viewportWidth = window.innerWidth;
+    
     enemy.style.backgroundColor = " black";
 
 
@@ -105,6 +117,7 @@ enemy.style.backgroundColor = "white";
       console.log('hit');
       console.log(health);
       counter = 0;
+      arrowDistance = 0;
        }
        
 
@@ -115,16 +128,21 @@ enemy.style.backgroundColor = "white";
 //    arrow.style.transform = `translate3d( ${arrowx + x}px, ${arrowy + y}px, 0 )`;
 // counter2=0;
 // }
-  if(counter > 0 ){
+  if(counter > 0 && arrowDistance > 0 ){
 
  arrowx = arrowx + velocityX;
  arrowy = arrowy + velocityY ;
    arrow.style.transform = `translate3d( ${arrowx}px, ${arrowy}px, 0 )`;
+
+   counter = counter > arrowDistance ? arrowDistance : counter;
    counter = counter - 4;
+   arrowDistance = arrowDistance - 4;
+
   }
-if(counter <= 0){
+if(counter <= 0 || arrowDistance <= 0){
 arrowx=x;
 arrowy=y;
+
    arrow.style.transform = `translate3d( ${arrowx}px, ${arrowy}px, 0 )`;
 }
    
@@ -142,9 +160,7 @@ if (right === 1 || left === 1 || up === 1 || down === 1 ){
 facts = "true";
 
 }
-       character.setAttribute("facing", direction);
-       slow = 0;
-       bowDirection()
+      
        character.style.transform = `translate3d( ${x}px, ${y}px, 0 )`;
        mush.style.transform = `translate3d( ${x}px, ${y}px, 0 )`;
        
@@ -159,7 +175,7 @@ facts = "true";
 facts = "false";
 
 placeEnemy()
-
+placeMushroom()
 
 
  }
@@ -289,6 +305,12 @@ addEventListener('mouseup', (event) =>{
 function bowDirection(){
    if(on === 1 ){
 
+arrowDistance++; 
+arrowDistance = arrowDistance > 100 ? 100 : arrowDistance;
+//makes the minimum distance 40 
+arrowDistance = arrowDistance < 40 ? 40 : arrowDistance;
+
+console.log(arrowDistance)
       window.addEventListener('mousemove', rotatePointer);
 slow = 2.5;
    if (degrees < 260 && degrees > 90){
@@ -302,7 +324,19 @@ slow = 2.5;
       character.setAttribute("facing", "w");
    }
 
+   if (degrees < 130 && degrees > 70){
+
+      swordbox.style.zIndex = "0";
+      character.setAttribute("facing", "d");
+   }
+   if (degrees < 310 && degrees > 250){
+
+      swordbox.style.zIndex = "0";
+      character.setAttribute("facing", "a");
+   }
 }
+else{slow = 0;}
+
 }
  
 
@@ -339,7 +373,7 @@ function rotatePointer(e) {
 
 
 
-
+//click for arrow/projectile
 addEventListener('click', (event) =>{
 
    if(counter <= 0){
@@ -354,6 +388,8 @@ y: Math.sin(angle)
 }
 
 
+//this makes it so it takes the same amount of time for any distance of shot
+multiplier = (arrowDistance / 100) * 15;
 
 
 velocityX = velocity.x * multiplier;
@@ -382,18 +418,50 @@ function placeEnemy(){
 
 
    enemyY  += enemySpeedY * (y - enemyY);
+   enemyX += enemySpeedX * (x - enemyX + 100);
+   
 
-   if(x - enemyX < 0){
-  enemyX += enemySpeedX * (x - enemyX + 100);
+//    if(y - enemyY < 0){
+//       enemyY += enemySpeedY * (y - enemyY + 130);
+      
+//        }
+    
+//        if(y - enemyY > 0){
+//           enemyY += enemySpeedY * (y - enemyY - 130);
+//            }
+
+//    if(x - enemyX < 0){
+//   enemyX += enemySpeedX * (x - enemyX + 100);
   
-   }
+//    }
 
-   if(x - enemyX > 0){
-      enemyX += enemySpeedX * (x - enemyX - 130);
-       }
+//    if(x - enemyX > 0){
+//       enemyX += enemySpeedX * (x - enemyX - 130);
+//        }
+
+
    enemy.style.transform = `translate3d( ${enemyX}px, ${enemyY}px, 0 )`;
   
 }
+
+function placeMushroom(){
+
+
+   mushY  += mushSpeedY * (y - mushY);
+
+   if(x - mushX < 0){
+  mushX += mushSpeedX * (x - mushX);
+  
+   }
+
+   if(x - mushX > 0){
+      mushX += mushSpeedX * (x - mushX );
+       }
+   mush.style.transform = `translate3d( ${mushX}px, ${mushY}px, 0 )`;
+  
+}
+
+
 
 
 

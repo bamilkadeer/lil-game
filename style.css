@@ -88,10 +88,20 @@ overflow: hidden;
     width: calc(13 * var(--grid-cell));
     height: calc(10 * var(--grid-cell));
     position: relative;
+
+    top:calc(50vh - (10 * var(--grid-cell)/2));
+    left:calc(50vw - (13 * var(--grid-cell)/2));
+  
     
  }
  
+.center{
+    position:absolute;
+    top: calc(-50vh + (10 * var(--grid-cell)/2));
+    left: calc(-50vw + (13 * var(--grid-cell)/2));
 
+
+}
 
 
 
@@ -121,6 +131,7 @@ overflow: hidden;
         width: 20px;
         height: 100px;
         z-index: 0;
+        display: none;
     }
 
 
@@ -154,11 +165,13 @@ overflow: hidden;
     position: absolute;
     width:30px;
     height: 30px;
-    background-color: rgb(135, 160, 235);
-    top:40vh;
-    left:48vw;
-
-    transition: all .5s ease-out;
+    /* background-color: rgb(135, 160, 235); */
+    top: calc(50vh - 40px);
+    left:calc(50vw - 60px);
+    background-image: url("mushroompng.png");
+    image-rendering: pixelated;
+    background-size: 100%;
+    /* transition: all .5s ease-out; */
 
 }
 
