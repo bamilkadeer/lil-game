@@ -58,6 +58,10 @@ let up= 0;
 let down = 0;
 let direction;
 let facts= "false";
+//momentum should actually be momentumX
+let momentum = 0;
+let momentumY = 0;
+
 
 let bx;
 let by;
@@ -94,6 +98,12 @@ let degrees = 0;
    if (up === 1) {y -= speed - slow;}
    if (down === 1) {y += speed - slow;}
 
+   MomentumCalculations()
+
+   
+
+
+console.log(momentum)
    character.setAttribute("facing", direction);
     
    bowDirection()
@@ -143,7 +153,7 @@ if(counter <= 0 || arrowDistance <= 0){
 arrowx=x;
 arrowy=y;
 
-   arrow.style.transform = `translate3d( ${arrowx}px, ${arrowy}px, 0 )`;
+   arrow.style.transform = `translate3d( ${arrowx + momentum}px, ${arrowy + momentumY}px, 0 )`;
 }
    
        if(bulletCheck === 1){
@@ -155,22 +165,25 @@ arrowy=y;
        }
 bulletCheck = 0;
 
+
+//checks if character is moving 
+//then  makes the walking animation start
 if (right === 1 || left === 1 || up === 1 || down === 1 ){
 
 facts = "true";
 
 }
       
-       character.style.transform = `translate3d( ${x}px, ${y}px, 0 )`;
+       character.style.transform = `translate3d( ${x + momentum}px, ${y + momentumY }px, 0 )`;
        mush.style.transform = `translate3d( ${x}px, ${y}px, 0 )`;
        
 
-      swordbox.style.transform = `translate3d( ${x}px, ${y}px, 0 )`;
+      swordbox.style.transform = `translate3d( ${x + momentum}px, ${y + momentumY}px, 0 )`;
 
        box.style.transform = `translate3d( ${x}px, ${y}px, 0 )`;   
        character.setAttribute("walking", facts);
    
-       map.style.transform = `translate3d( ${-x}px, ${-y}px, 0 )`;
+       map.style.transform = `translate3d( ${-x - momentum}px, ${-y - momentumY}px, 0 )`;
 
 facts = "false";
 
@@ -281,6 +294,11 @@ window.addEventListener
  }
  step(); //kick off the first step!
 
+
+
+
+ //bow visibility
+
  addEventListener('mousedown', (event) =>{
 
    swordbox.style.display = "inherit";
@@ -293,12 +311,6 @@ addEventListener('mouseup', (event) =>{
    swordbox.style.display = "none";
    on = 0;
 })
-
-
-
-
-
-
 
 
 
@@ -380,7 +392,7 @@ addEventListener('click', (event) =>{
 
       
 
-const angle =Math.atan2(event.clientY - viewportHeight/2 , event.clientX - viewportWidth/2 )
+const angle =Math.atan2(event.clientY - viewportHeight/2 + momentumY , event.clientX - viewportWidth/2 + momentum)
 
 const velocity = {
 x: Math.cos(angle),
@@ -421,23 +433,23 @@ function placeEnemy(){
    enemyX += enemySpeedX * (x - enemyX + 100);
    
 
-//    if(y - enemyY < 0){
-//       enemyY += enemySpeedY * (y - enemyY + 130);
+   if(y - enemyY < 0){
+      enemyY += enemySpeedY * (y - enemyY + 130);
       
-//        }
+       }
     
-//        if(y - enemyY > 0){
-//           enemyY += enemySpeedY * (y - enemyY - 130);
-//            }
+       if(y - enemyY > 0){
+          enemyY += enemySpeedY * (y - enemyY - 130);
+           }
 
-//    if(x - enemyX < 0){
-//   enemyX += enemySpeedX * (x - enemyX + 100);
+   if(x - enemyX < 0){
+  enemyX += enemySpeedX * (x - enemyX + 100);
   
-//    }
+   }
 
-//    if(x - enemyX > 0){
-//       enemyX += enemySpeedX * (x - enemyX - 130);
-//        }
+   if(x - enemyX > 0){
+      enemyX += enemySpeedX * (x - enemyX - 130);
+       }
 
 
    enemy.style.transform = `translate3d( ${enemyX}px, ${enemyY}px, 0 )`;
@@ -461,7 +473,53 @@ function placeMushroom(){
   
 }
 
+function MomentumCalculations(){
 
+   if (left ===1 ){
+      momentum = momentum + 1
+
+      momentum = momentum > 5 ? 5 : momentum;
+   }
+else if(momentum > 0){momentum = momentum -1
+
+      momentum = momentum < 0 ? 0 : momentum;
+
+}
+
+if (right ===1 ){
+   momentum = momentum - 1
+
+   momentum = momentum < -5 ? -5 : momentum;
+}
+else if (momentum < 0){momentum = momentum + 1
+
+   momentum = momentum > 0 ? 0 : momentum;
+
+}
+//up and down
+if (up ===1 ){
+   momentumY = momentumY + 1
+
+   momentumY = momentumY > 5 ? 5 : momentumY;
+}
+else if(momentumY > 0){momentumY = momentumY -1
+
+   momentumY = momentumY < 0 ? 0 : momentumY;
+
+}
+
+if (down ===1 ){
+momentumY = momentumY - 1
+
+momentumY = momentumY < -5 ? -5 : momentumY;
+}
+else if (momentumY < 0){momentumY = momentumY + 1
+
+momentumY = momentumY > 0 ? 0 : momentumY;
+
+}
+
+}
 
 
 
