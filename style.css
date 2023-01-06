@@ -37,7 +37,7 @@ overflow: hidden;
 
  .character_spritesheet {
     position: absolute;
-    background: url("https://i.ibb.co/19CYFMD/sprite-sheet.png") ;
+    background: url("diagonal\ with\ extra\ space.PNG") ;
     background-size: 100%;
     width: var(--width);
     height: var(--height);
@@ -48,16 +48,16 @@ overflow: hidden;
 
 
 .character[facing="d"] .character_spritesheet {
-    background-position-y: calc( var(--pixel-size) * -29 );
+    background-position-y: calc( var(--pixel-size) * -28.8 );
  }
  .character[facing="w"] .character_spritesheet {
-    background-position-y: calc( var(--pixel-size) * -58 );
+    background-position-y: calc( var(--pixel-size) * -57.5 );
  }
  .character[facing="a"] .character_spritesheet {
-    background-position-y: calc( var(--pixel-size) * -87 );
+    background-position-y: calc( var(--pixel-size) * -86 );
  }
  .character[walking="true"] .character_spritesheet {
-    animation: walkAnimation 0.8s steps(4) infinite; 
+    animation: walkAnimation 0.3s steps(2) infinite; 
  }
  
  @keyframes walkAnimation {
@@ -65,7 +65,7 @@ overflow: hidden;
      transform: translate3d(0%,0%,0);
    }
    to {
-     transform: translate3d(-100%,0%,0);
+     transform: translate3d(-50%,0%,0);
    }
  }
 
@@ -189,10 +189,20 @@ overflow: hidden;
 
 }
 
+/* .healthbarbox{
+
+    position: absolute;
+    display: flex;
+} */
 
 .healthbar{
+
     position: absolute;
     width: 20vw;
+    top:90%;
+    left:50%;
+    transform: translate(-50% , -50%);
+    
  }
  .healthbar_fill {
     width: 100%;

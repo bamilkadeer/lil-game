@@ -58,6 +58,9 @@ let up= 0;
 let down = 0;
 let direction;
 let facts= "false";
+
+let lastHeldDirectionX = "left";
+let lastHeldDirectionY = "up";
 //momentum should actually be momentumX
 let momentum = 0;
 let momentumY = 0;
@@ -100,11 +103,24 @@ let degrees = 0;
 
    MomentumCalculations()
 
-   
+   if(lastHeldDirectionX === "left" && lastHeldDirectionY === "up"){
+      character.setAttribute("facing", "a");
+   }
+
+   if(lastHeldDirectionX === "right" && lastHeldDirectionY === "up"){
+      character.setAttribute("facing", "d");
+   }
+   if(lastHeldDirectionY === "down" && lastHeldDirectionX === "right"){
+      character.setAttribute("facing", "w");
+   }
+
+   if(lastHeldDirectionY === "down" && lastHeldDirectionX === "left"){
+      character.setAttribute("facing", "s");
+   }
 
 
-console.log(momentum)
-   character.setAttribute("facing", direction);
+
+
     
    bowDirection()
 
@@ -208,14 +224,14 @@ placeMushroom()
             case 'd':
 
             right = 1;
-          
+          lastHeldDirectionX = "right";
             break
 
 
             case 'a':
 
                 left = 1;
-    
+                lastHeldDirectionX = "left";
                 break
 
 
@@ -223,14 +239,14 @@ placeMushroom()
                 case 's':
 
                     down = 1;
-        
+                    lastHeldDirectionY = "down";
                     break
         
         
                     case 'w':
         
                         up = 1;
-            
+                        lastHeldDirectionY = "up";
                         break
 
                         case ' ':
@@ -239,7 +255,10 @@ placeMushroom()
                
                            break
     }
+    console.log(lastHeldDirectionX)
 
+    console.log(lastHeldDirectionY)
+    
  })
 
 
@@ -285,7 +304,7 @@ window.addEventListener
 
 
 
-
+//game loop
  const step = () => {
     placeCharacter();
     window.requestAnimationFrame(() => {
@@ -325,26 +344,31 @@ arrowDistance = arrowDistance < 40 ? 40 : arrowDistance;
 console.log(arrowDistance)
       window.addEventListener('mousemove', rotatePointer);
 slow = 2.5;
-   if (degrees < 260 && degrees > 90){
-
+//    if (degrees < 270 && degrees > 180){
+// // bottom left
+//       swordbox.style.zIndex = "1";
+//       character.setAttribute("facing", "a");
+//    }
+   
+   if(degrees < 270 && degrees > 0){
+      //top left
       swordbox.style.zIndex = "1";
       character.setAttribute("facing", "s");
    }
-   
-   else{
+else{
+   // bottom left
       swordbox.style.zIndex = "0";
-      character.setAttribute("facing", "w");
-   }
-
-   if (degrees < 130 && degrees > 70){
-
+      character.setAttribute("facing", "a");
+}
+   if (degrees < 90 && degrees > 0){
+//top right
       swordbox.style.zIndex = "0";
       character.setAttribute("facing", "d");
    }
-   if (degrees < 310 && degrees > 250){
-
-      swordbox.style.zIndex = "0";
-      character.setAttribute("facing", "a");
+   if (degrees < 180 && degrees > 90){
+//bottom right
+      swordbox.style.zIndex = "1";
+      character.setAttribute("facing", "w");
    }
 }
 else{slow = 0;}
