@@ -13,6 +13,9 @@
 
     --bar-fill: #ec290a;
     --bar-top: #ff3818;
+
+    --character-bar-fill: #0aec51;
+    --character-bar-top: #18ff52;
  }
 
 
@@ -22,6 +25,14 @@ margin:0;
     height: 100vh;
 cursor: cell;
 overflow: hidden;
+touch-action: none;
+
+
+-webkit-user-select: none;  /* Chrome all / Safari all */
+-moz-user-select: none;     /* Firefox all */
+-ms-user-select: none;      /* IE 10+ */
+-o-user-select: none;
+user-select: none;
 }
 
 
@@ -54,7 +65,7 @@ overflow: hidden;
     background-position-y: calc( var(--pixel-size) * -57.5 );
  }
  .character[facing="a"] .character_spritesheet {
-    background-position-y: calc( var(--pixel-size) * -86 );
+    background-position-y: calc( var(--pixel-size) * -86.3 );
  }
  .character[walking="true"] .character_spritesheet {
     animation: walkAnimation 0.3s steps(2) infinite; 
@@ -74,7 +85,7 @@ overflow: hidden;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background: beige;
+    background: #587f6b;
     position:absolute;
 
 
@@ -146,6 +157,28 @@ overflow: hidden;
     background-color: black;
     top:50vh;
     left:50vw;
+    
+
+}
+
+.arrowpicturebox{
+position: absolute;
+    top:10px;
+    left: -10px;
+    width: 10px;
+    height: 50px;
+    transform: translate(-50% , -50% );
+}
+
+.arrowpicture{
+padding: 0px;
+margin: 0px;
+    width: 30px;
+    height: 30px;
+    background-image: url("thickarrowPNG.PNG");
+    image-rendering: pixelated;
+    background-size: 100%;
+    transform-origin: center;
 
 }
 
@@ -157,6 +190,7 @@ overflow: hidden;
     border: 2px solid salmon;
  
     transform-origin: bottom center;
+    z-index: 1;
 }
 
 .follow{
@@ -215,3 +249,31 @@ overflow: hidden;
 
 
 
+ .character_healthbar{
+
+    position: absolute;
+    width: 20vw;
+    top:10%;
+    left:50%;
+    transform: translate(-50% , -50%);
+    
+ }
+ .character_healthbar_fill {
+    width: 100%;
+    fill: var(--character-bar-fill);
+    transition: width 0.5s ease-in, fill 0.2s linear;
+ }
+ .character_healthbar_fill-top {
+    fill: var(--character-bar-top);
+ }
+
+
+
+.enemyprojectile{
+
+
+width:100px;
+height:100px;
+background-color: red;
+border: 3px solid salmon;
+}

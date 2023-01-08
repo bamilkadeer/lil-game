@@ -1,4 +1,6 @@
-import Health from "./health.js"
+import Health from "./health.js";
+
+import EnemyProjectile from "./enemyprojectile.js";
 
 
 
@@ -28,6 +30,8 @@ let mush = document.querySelector('.follow');
 let bullet = document.querySelector('.projectile');
 
 let arrow = document.querySelector('.arrow');
+let arrowpicture = document.querySelector('.arrowpicture');
+let arrowpicturebox = document.querySelector('.arrowpicturebox');
 let arrowbox = document.querySelector('.arrowbox');
 
 let enemy = document.querySelector('.enemy');
@@ -92,14 +96,33 @@ let centerX = 0;
 
 let radians = Math.atan2(mouseX - centerX, mouseY - centerY);
 let degrees = 0;
-//Set up the game loop
 
- 
- const placeCharacter = () => {
-   if (right === 1) {x += speed - slow;}
-   if (left === 1) {x -= speed - slow;}
-   if (up === 1) {y -= speed - slow;}
-   if (down === 1) {y += speed - slow;}
+
+
+         //this stops right click
+//document.addEventListener('contextmenu', event => event.preventDefault());
+setInterval(EnemyProjectiles, 1000);
+
+let projectiles = new EnemyProjectile(x,y,enemyX,enemyY);
+function EnemyProjectiles(){
+
+
+   projectiles = new EnemyProjectile(x,y,enemyX,enemyY);
+
+}
+
+//game loop
+ const placeCharacter = () => {   projectiles.createProjectile();
+
+   projectiles.projectileVelocity();
+     projectiles.moveProjectile();
+if(!document.hasFocus()){left = 0; right = 0; up = 0; down =0;}
+
+
+   if (right === 1) {x += speed - slow; lastHeldDirectionX = "right";}
+   if (left === 1) {x -= speed - slow; lastHeldDirectionX = "left"; }
+   if (up === 1) {y -= speed - slow; lastHeldDirectionY = "up";}
+   if (down === 1) {y += speed - slow; lastHeldDirectionY = "down";}
 
    MomentumCalculations()
 
@@ -127,60 +150,7 @@ let degrees = 0;
     viewportHeight = window.innerHeight;
     viewportWidth = window.innerWidth;
     
-    enemy.style.backgroundColor = " black";
-
-
-    //50s are location and 30s are width and height
-    if (arrowx + 10 >=  + enemyX     &&  
-      arrowx        <=  + 30 + enemyX &&
-      arrowy + 10   >=  + enemyY    &&
-      arrowy        <=  + 30 + enemyY && health > 0){
-enemy.style.backgroundColor = "white";
-    
-    health =  new Health(change).updateHealth(-10);
-     new Health(change).renderHealth();
-
-      console.log('hit');
-      console.log(health);
-      counter = 0;
-      arrowDistance = 0;
-       }
-       
-
-   //console.log(camera.offsetWidth) 
-  // console.log(camera.offsetHeight) 
-
-// if (counter2 === 1){
-//    arrow.style.transform = `translate3d( ${arrowx + x}px, ${arrowy + y}px, 0 )`;
-// counter2=0;
-// }
-  if(counter > 0 && arrowDistance > 0 ){
-
- arrowx = arrowx + velocityX;
- arrowy = arrowy + velocityY ;
-   arrow.style.transform = `translate3d( ${arrowx}px, ${arrowy}px, 0 )`;
-
-   counter = counter > arrowDistance ? arrowDistance : counter;
-   counter = counter - 4;
-   arrowDistance = arrowDistance - 4;
-
-  }
-if(counter <= 0 || arrowDistance <= 0){
-arrowx=x;
-arrowy=y;
-
-   arrow.style.transform = `translate3d( ${arrowx + momentum}px, ${arrowy + momentumY}px, 0 )`;
-}
-   
-       if(bulletCheck === 1){
-         bx = mouseX;
-         by = mouseY;
-        bullet.style.transform = `translate3d( ${x}px, ${y}px, 0 )`
-         bullet.style.top = ` ${by}px`;
-         bullet.style.left = ` ${bx}px`;
-       }
-bulletCheck = 0;
-
+arrowcalculations()
 
 //checks if character is moving 
 //then  makes the walking animation start
@@ -224,14 +194,14 @@ placeMushroom()
             case 'd':
 
             right = 1;
-          lastHeldDirectionX = "right";
+         
             break
 
 
             case 'a':
 
                 left = 1;
-                lastHeldDirectionX = "left";
+           
                 break
 
 
@@ -239,14 +209,14 @@ placeMushroom()
                 case 's':
 
                     down = 1;
-                    lastHeldDirectionY = "down";
+               
                     break
         
         
                     case 'w':
         
                         up = 1;
-                        lastHeldDirectionY = "up";
+                      
                         break
 
                         case ' ':
@@ -335,11 +305,13 @@ addEventListener('mouseup', (event) =>{
 
 function bowDirection(){
    if(on === 1 ){
-
+      arrowpicture.style.transform = 'rotate('+degrees+'deg)';
 arrowDistance++; 
 arrowDistance = arrowDistance > 100 ? 100 : arrowDistance;
 //makes the minimum distance 40 
 arrowDistance = arrowDistance < 40 ? 40 : arrowDistance;
+
+// arrowpicturebox.style.transform = `translate3d( ${0}px, ${arrowDistance}px, 0 )`;  
 
 console.log(arrowDistance)
       window.addEventListener('mousemove', rotatePointer);
@@ -351,24 +323,32 @@ slow = 2.5;
 //    }
    
    if(degrees < 270 && degrees > 0){
-      //top left
+      //bottom left
       swordbox.style.zIndex = "1";
       character.setAttribute("facing", "s");
+      lastHeldDirectionX = "left";
+      lastHeldDirectionY = "down";
    }
 else{
-   // bottom left
+   // top left
       swordbox.style.zIndex = "0";
       character.setAttribute("facing", "a");
+      lastHeldDirectionX = "left";
+      lastHeldDirectionY = "up";
 }
    if (degrees < 90 && degrees > 0){
 //top right
       swordbox.style.zIndex = "0";
       character.setAttribute("facing", "d");
+      lastHeldDirectionX = "right";
+      lastHeldDirectionY = "up";
    }
    if (degrees < 180 && degrees > 90){
 //bottom right
       swordbox.style.zIndex = "1";
       character.setAttribute("facing", "w");
+      lastHeldDirectionX = "right";
+      lastHeldDirectionY = "down";
    }
 }
 else{slow = 0;}
@@ -411,10 +391,9 @@ function rotatePointer(e) {
 
 //click for arrow/projectile
 addEventListener('click', (event) =>{
-
    if(counter <= 0){
 
-      
+      arrowpicture.style.transform = 'rotate('+degrees+'deg)';
 
 const angle =Math.atan2(event.clientY - viewportHeight/2 + momentumY , event.clientX - viewportWidth/2 + momentum)
 
@@ -437,17 +416,6 @@ counter2= 1;
 })
 
 
-function projectile(x,y){
-
-   
- if (arrowx + 10 >= bx + x + 30){
-
-console.log("hit");
-
- }
-
-
-}
 
 
 function placeEnemy(){
@@ -545,6 +513,47 @@ momentumY = momentumY > 0 ? 0 : momentumY;
 
 }
 
+//arrow distance and collision calculations
+
+function arrowcalculations(){
+   enemy.style.backgroundColor = " black";
 
 
+   //50s are location and 30s are width and height
+   if (arrowx + 10 >=  + enemyX     &&  
+     arrowx        <=  + 30 + enemyX &&
+     arrowy + 10   >=  + enemyY    &&
+     arrowy        <=  + 30 + enemyY && health > 0){
+enemy.style.backgroundColor = "white";
+   
+   health =  new Health(change).updateHealth(-10);
+    new Health(change).renderHealth();
+
+     console.log('hit');
+     console.log(health);
+     counter = 0;
+     arrowDistance = 0;
+      }
+      
+
+ if(counter > 0 && arrowDistance > 0 ){
+
+arrowx = arrowx + velocityX;
+arrowy = arrowy + velocityY ;
+  arrow.style.transform = `translate3d( ${arrowx}px, ${arrowy}px, 0 )`;
+
+  counter = counter > arrowDistance ? arrowDistance : counter;
+  counter = counter - 4;
+  arrowDistance = arrowDistance - 4;
+
+ }
+if(counter <= 0 || arrowDistance <= 0){
+arrowx=x;
+arrowy=y;
+
+  arrow.style.transform = `translate3d( ${arrowx + momentum}px, ${arrowy + momentumY}px, 0 )`;
+}
+  
+  
+}
 
