@@ -102,6 +102,8 @@ user-select: none;
 
     top:calc(50vh - (10 * var(--grid-cell)/2));
     left:calc(50vw - (13 * var(--grid-cell)/2));
+
+
   
     
  }
@@ -154,7 +156,7 @@ user-select: none;
     position: absolute;
     width:10px;
     height: 10px;
-    background-color: black;
+    /* background-color: black; */
     top:50vh;
     left:50vw;
     
@@ -179,6 +181,7 @@ margin: 0px;
     image-rendering: pixelated;
     background-size: 100%;
     transform-origin: center;
+    
 
 }
 
@@ -270,10 +273,12 @@ margin: 0px;
 
 
 .enemyprojectile{
+position:absolute;
 
-
-width:100px;
-height:100px;
+width:30px;
+height:30px;
 background-color: red;
 border: 3px solid salmon;
+top: calc(50vh );
+left:calc(50vw );
 }

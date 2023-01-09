@@ -1,8 +1,8 @@
 import Health from "./health.js";
 
-import EnemyProjectile from "./enemyprojectile.js";
+import Projectile from "./enemyprojectile.js";
 
-
+// let projectiles=[];
 
 
 var health = 100;
@@ -27,7 +27,7 @@ let swordbox = document.querySelector('.swordbox');
 
 let mush = document.querySelector('.follow');
 
-let bullet = document.querySelector('.projectile');
+// let bullet = document.querySelector('.projectile');
 
 let arrow = document.querySelector('.arrow');
 let arrowpicture = document.querySelector('.arrowpicture');
@@ -97,25 +97,50 @@ let centerX = 0;
 let radians = Math.atan2(mouseX - centerX, mouseY - centerY);
 let degrees = 0;
 
+function randomNumber(min, max) {
+   return Math.floor(Math.random() * (max - min) + min);
+   }
 
+// let projectile = document.createElement("div");
+// projectile.classList.add("enemyprojectile");
+// map.append(projectile);
 
          //this stops right click
 //document.addEventListener('contextmenu', event => event.preventDefault());
-setInterval(EnemyProjectiles, 1000);
 
-let projectiles = new EnemyProjectile(x,y,enemyX,enemyY);
+const projectile = new Projectile(enemyX,enemyY,{x:3,y:1});
+const projectiles = [];
+
+setInterval(EnemyProjectiles, 5000);
+
+
 function EnemyProjectiles(){
 
+//calculations
+const bulletangle = Math.atan2(y - enemyY , x - enemyX )
 
-   projectiles = new EnemyProjectile(x,y,enemyX,enemyY);
+const bulletvelocity = {
+x: Math.cos(bulletangle),
+y: Math.sin(bulletangle)
+}
+bulletvelocity.x *=10;
+bulletvelocity.y *=10;
 
+
+  
+  projectiles.push(new Projectile(enemyX,enemyY,bulletvelocity))
+  
 }
 
 //game loop
- const placeCharacter = () => {   projectiles.createProjectile();
+ const placeCharacter = () => { 
 
-   projectiles.projectileVelocity();
-     projectiles.moveProjectile();
+   projectiles.forEach((projectile) => {
+  
+      projectile.update()
+    })
+      
+
 if(!document.hasFocus()){left = 0; right = 0; up = 0; down =0;}
 
 
@@ -225,9 +250,9 @@ placeMushroom()
                
                            break
     }
-    console.log(lastHeldDirectionX)
+   //  console.log(lastHeldDirectionX)
 
-    console.log(lastHeldDirectionY)
+   //  console.log(lastHeldDirectionY)
     
  })
 
@@ -291,6 +316,7 @@ window.addEventListener
  addEventListener('mousedown', (event) =>{
 
    swordbox.style.display = "inherit";
+   arrowpicture.style.display = "inherit";
     on = 1;
 
 })
@@ -298,6 +324,7 @@ window.addEventListener
 addEventListener('mouseup', (event) =>{
 
    swordbox.style.display = "none";
+
    on = 0;
 })
 
@@ -313,7 +340,7 @@ arrowDistance = arrowDistance < 40 ? 40 : arrowDistance;
 
 // arrowpicturebox.style.transform = `translate3d( ${0}px, ${arrowDistance}px, 0 )`;  
 
-console.log(arrowDistance)
+// console.log(arrowDistance)
       window.addEventListener('mousemove', rotatePointer);
 slow = 2.5;
 //    if (degrees < 270 && degrees > 180){
@@ -325,6 +352,7 @@ slow = 2.5;
    if(degrees < 270 && degrees > 0){
       //bottom left
       swordbox.style.zIndex = "1";
+      arrowpicture.style.zIndex = "1";
       character.setAttribute("facing", "s");
       lastHeldDirectionX = "left";
       lastHeldDirectionY = "down";
@@ -332,6 +360,7 @@ slow = 2.5;
 else{
    // top left
       swordbox.style.zIndex = "0";
+      arrowpicture.style.zIndex = "0";
       character.setAttribute("facing", "a");
       lastHeldDirectionX = "left";
       lastHeldDirectionY = "up";
@@ -339,6 +368,7 @@ else{
    if (degrees < 90 && degrees > 0){
 //top right
       swordbox.style.zIndex = "0";
+      arrowpicture.style.zIndex = "0";
       character.setAttribute("facing", "d");
       lastHeldDirectionX = "right";
       lastHeldDirectionY = "up";
@@ -346,6 +376,7 @@ else{
    if (degrees < 180 && degrees > 90){
 //bottom right
       swordbox.style.zIndex = "1";
+      arrowpicture.style.zIndex = "1";
       character.setAttribute("facing", "w");
       lastHeldDirectionX = "right";
       lastHeldDirectionY = "down";
@@ -533,6 +564,7 @@ enemy.style.backgroundColor = "white";
      console.log(health);
      counter = 0;
      arrowDistance = 0;
+     arrowpicture.style.display = "none";
       }
       
 
@@ -545,6 +577,7 @@ arrowy = arrowy + velocityY ;
   counter = counter > arrowDistance ? arrowDistance : counter;
   counter = counter - 4;
   arrowDistance = arrowDistance - 4;
+  arrowpicture.style.display = "inherit";
 
  }
 if(counter <= 0 || arrowDistance <= 0){
@@ -552,6 +585,9 @@ arrowx=x;
 arrowy=y;
 
   arrow.style.transform = `translate3d( ${arrowx + momentum}px, ${arrowy + momentumY}px, 0 )`;
+
+  //delete this if you want to add arrow in bow animation
+if(on != 1){arrowpicture.style.display = "none";}
 }
   
   
