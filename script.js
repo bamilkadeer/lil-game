@@ -1,5 +1,5 @@
 import Health from "./health.js";
-
+import CharacterHealth from "./CharacterHealth.js";
 import Projectile from "./enemyprojectile.js";
 
 // let projectiles=[];
@@ -7,6 +7,7 @@ import Projectile from "./enemyprojectile.js";
 
 var health = 100;
 
+let Characterhealth = 100;
 let change = 0;
 
 var fills = document.querySelectorAll(".healthbar_fill");
@@ -45,6 +46,13 @@ let enemySpeedX = 0.008;
 let enemyY = 0;
 let enemyX = 200;
 
+let enemyProjectile
+let bulletvelocity = {x:0,y:0}
+
+let enemyProjectileX ;
+let enemyProjectileY;
+// bulletvelocity.x =0;
+// bulletvelocity.y =0;
 //mush variables
 let mushSpeedY = 0.09;
 let mushSpeedX = 0.06;
@@ -106,12 +114,20 @@ function randomNumber(min, max) {
 // map.append(projectile);
 
          //this stops right click
-//document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('contextmenu', event => event.preventDefault());
 
 const projectile = new Projectile(enemyX,enemyY,{x:3,y:1});
 const projectiles = [];
 
-setInterval(EnemyProjectiles, 5000);
+// setTimeout(EnemyProjectiles, randomNumber(1000,5000));
+setInterval(time, 2000);
+// console.log(randomNumber(1000,5000))
+
+function time (){
+
+   setTimeout(EnemyProjectiles, randomNumber(1000,2000));
+   console.log('go')
+}
 
 
 function EnemyProjectiles(){
@@ -119,27 +135,65 @@ function EnemyProjectiles(){
 //calculations
 const bulletangle = Math.atan2(y - enemyY , x - enemyX )
 
-const bulletvelocity = {
+ bulletvelocity = {
 x: Math.cos(bulletangle),
 y: Math.sin(bulletangle)
 }
 bulletvelocity.x *=10;
 bulletvelocity.y *=10;
 
-
+enemyProjectileX = enemyX;
+enemyProjectileY = enemyY;
   
   projectiles.push(new Projectile(enemyX,enemyY,bulletvelocity))
   
 }
 
-//game loop
- const placeCharacter = () => { 
 
+function EnemyProjectileCollision(){
+let enemyProjectile = projectile.update();
+
+// console.log(enemyProjectile.y)
+   if (x + 16 + 32 >=  + enemyProjectileX  &&  
+      x + 16       <=  + 30 + enemyProjectileX &&
+      y + 10 + 40  >=  + enemyProjectileY    &&
+      y + 10       <=  + 30 + enemyProjectileY && Characterhealth > 0 && health > 0){
+         
+         //  enemy.style.backgroundColor = "white";
+    Characterhealth =  new CharacterHealth(change).updateHealth(-1);
+     new CharacterHealth(change).renderHealth();
+ 
+      console.log('hit');
+      console.log(Characterhealth);
+
+       }
+       
+ 
+
+}
+
+function ProjectilePosition(){
+
+   enemyProjectileX = enemyProjectileX + bulletvelocity.x;
+   enemyProjectileY = enemyProjectileY + bulletvelocity.y;
+}
+//game loop
+//game loop
+//game loop
+//game loop
+//game loop
+//game loop
+
+ const placeCharacter = () => {
+ 
+   
+EnemyProjectileCollision();
    projectiles.forEach((projectile) => {
   
       projectile.update()
+    
     })
-      
+    ProjectilePosition()
 
 if(!document.hasFocus()){left = 0; right = 0; up = 0; down =0;}
 
@@ -547,14 +601,14 @@ momentumY = momentumY > 0 ? 0 : momentumY;
 //arrow distance and collision calculations
 
 function arrowcalculations(){
-   enemy.style.backgroundColor = " black";
+   enemy.style.backgroundColor = " transparent";
 
 
    //50s are location and 30s are width and height
    if (arrowx + 10 >=  + enemyX     &&  
-     arrowx        <=  + 30 + enemyX &&
+     arrowx        <=  + 100 + enemyX &&
      arrowy + 10   >=  + enemyY    &&
-     arrowy        <=  + 30 + enemyY && health > 0){
+     arrowy        <=  + 100 + enemyY && health > 0){
 enemy.style.backgroundColor = "white";
    
    health =  new Health(change).updateHealth(-10);

@@ -44,7 +44,15 @@ user-select: none;
     left:calc( 50vw - calc(var(--width)/10) - 5px);
     top: calc( 50vh - calc(var(--height)/2) - 10px);
  }
+.hitbox{
 
+position: absolute;
+    width: 32px;
+    height: 40px;
+top: 10px;
+left:16px;
+border: 1px solid salmon;
+}
 
  .character_spritesheet {
     position: absolute;
@@ -218,11 +226,15 @@ margin: 0px;
 
 
     position: absolute;
-    width:30px;
-    height: 30px;
-    background-color: rgb(201, 62, 136);
+    width:200px;
+    height: 200px;
+    /* background-color: rgb(201, 62, 136); */
     top: calc(50vh );
     left:calc(50vw );
+
+    background-image: url("angel\ enemy.PNG");
+    image-rendering: pixelated;
+    background-size: 100%;
 
 }
 

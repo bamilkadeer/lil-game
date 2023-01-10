@@ -6,7 +6,7 @@ let center = document.querySelector('.center');
 let bullet = document.createElement("div");
 
 
-
+let position;
 
 export default class Projectile {
 
@@ -35,6 +35,8 @@ this.draw()
 this.x = this.x + this.velocity.x;
 this.y = this.y + this.velocity.y; 
 bullet.style.transform = `translate3d( ${this.x}px, ${this.y}px, 0 )`;
+position = {x:this.x,y: this.y}
+return position
 }
 }
 
