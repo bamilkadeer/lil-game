@@ -93,7 +93,7 @@ border: 1px solid salmon;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background: #587f6b;
+    background: #65845b;
     position:absolute;
 
 
@@ -102,10 +102,10 @@ border: 1px solid salmon;
  
  .map {
     image-rendering: pixelated;
-    background-image: url("https://assets.codepen.io/21542/CameraDemoMap.png");
+    background-image: url("background.PNG");
     background-size: 100%;
-    width: calc(13 * var(--grid-cell));
-    height: calc(10 * var(--grid-cell));
+    width: 1000px;
+    height: 700px;
     position: relative;
 
     top:calc(50vh - (10 * var(--grid-cell)/2));
@@ -226,8 +226,8 @@ margin: 0px;
 
 
     position: absolute;
-    width:200px;
-    height: 200px;
+    width:100px;
+    height: 100px;
     /* background-color: rgb(201, 62, 136); */
     top: calc(50vh );
     left:calc(50vw );
