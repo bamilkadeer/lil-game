@@ -21,7 +21,7 @@ var fills = document.querySelectorAll(".healthbar_fill");
 let character = document.querySelector('.character');
 let box = document.querySelector('.box');
 let camera = document.querySelector('.camera');
-
+let center = document.querySelector('.center');
 let map = document.querySelector('.map');
 
 let swordbox = document.querySelector('.swordbox');
@@ -34,6 +34,10 @@ let arrow = document.querySelector('.arrow');
 let arrowpicture = document.querySelector('.arrowpicture');
 let arrowpicturebox = document.querySelector('.arrowpicturebox');
 let arrowbox = document.querySelector('.arrowbox');
+let moveback = document.querySelector('.moveback');
+let arrowangle;
+
+let rotate = document.querySelector('.rotate');
 
 let enemy = document.querySelector('.enemy');
 
@@ -45,6 +49,9 @@ let enemySpeedY = 0.02;
 let enemySpeedX = 0.008;
 let enemyY = 0;
 let enemyX = 200;
+
+let enemyAngle;
+let enemyVelocity;
 
 let enemyProjectile
 let bulletvelocity = {x:0,y:0}
@@ -114,9 +121,9 @@ function randomNumber(min, max) {
 // map.append(projectile);
 
          //this stops right click
-document.addEventListener('contextmenu', event => event.preventDefault());
+// document.addEventListener('contextmenu', event => event.preventDefault());
 
-const projectile = new Projectile(enemyX,enemyY,{x:3,y:1});
+const projectile = new Projectile(enemyX,enemyY,{x:300,y:100});
 const projectiles = [];
 
 // setTimeout(EnemyProjectiles, randomNumber(1000,5000));
@@ -196,7 +203,7 @@ EnemyProjectileCollision();
     ProjectilePosition()
 
 if(!document.hasFocus()){left = 0; right = 0; up = 0; down =0;}
-
+vectorNormalize();
 
    if (right === 1) {x += speed - slow; lastHeldDirectionX = "right";}
    if (left === 1) {x -= speed - slow; lastHeldDirectionX = "left"; }
@@ -230,6 +237,7 @@ if(!document.hasFocus()){left = 0; right = 0; up = 0; down =0;}
     viewportWidth = window.innerWidth;
     
 arrowcalculations()
+stick()
 
 //checks if character is moving 
 //then  makes the walking animation start
@@ -406,7 +414,7 @@ slow = 2.5;
    if(degrees < 270 && degrees > 0){
       //bottom left
       swordbox.style.zIndex = "1";
-      arrowpicture.style.zIndex = "1";
+      arrowbox.style.zIndex = "1";
       character.setAttribute("facing", "s");
       lastHeldDirectionX = "left";
       lastHeldDirectionY = "down";
@@ -414,7 +422,7 @@ slow = 2.5;
 else{
    // top left
       swordbox.style.zIndex = "0";
-      arrowpicture.style.zIndex = "0";
+      arrowbox.style.zIndex = "0";
       character.setAttribute("facing", "a");
       lastHeldDirectionX = "left";
       lastHeldDirectionY = "up";
@@ -422,7 +430,7 @@ else{
    if (degrees < 90 && degrees > 0){
 //top right
       swordbox.style.zIndex = "0";
-      arrowpicture.style.zIndex = "0";
+      arrowbox.style.zIndex = "0";
       character.setAttribute("facing", "d");
       lastHeldDirectionX = "right";
       lastHeldDirectionY = "up";
@@ -430,7 +438,7 @@ else{
    if (degrees < 180 && degrees > 90){
 //bottom right
       swordbox.style.zIndex = "1";
-      arrowpicture.style.zIndex = "1";
+      arrowbox.style.zIndex = "1";
       character.setAttribute("facing", "w");
       lastHeldDirectionX = "right";
       lastHeldDirectionY = "down";
@@ -479,6 +487,7 @@ addEventListener('click', (event) =>{
    if(counter <= 0){
 
       arrowpicture.style.transform = 'rotate('+degrees+'deg)';
+      arrowangle = degrees;
 
 const angle =Math.atan2(event.clientY - viewportHeight/2 + momentumY , event.clientX - viewportWidth/2 + momentum)
 
@@ -505,9 +514,16 @@ counter2= 1;
 
 function placeEnemy(){
 
+   //calculates enemy direction towards character
+   enemyAngle =Math.atan2(y - enemyY, x - enemyX )
 
-   enemyY  += enemySpeedY * (y - enemyY);
-   enemyX += enemySpeedX * (x - enemyX + 100);
+   enemyVelocity = {
+   x: Math.cos(enemyAngle),
+   y: Math.sin(enemyAngle)
+   }
+//
+enemyY  += enemySpeedY * enemyVelocity.y;
+enemyX += enemySpeedX *enemyVelocity.x;
    
 
    if(y - enemyY < 0){
@@ -647,3 +663,51 @@ if(on != 1){arrowpicture.style.display = "none";}
   
 }
 
+function stick(){
+
+if(arrowDistance < 5 && arrowDistance > 0){
+
+
+   let stick = document.createElement("div");
+   let rotate = document.createElement("div");
+   rotate.classList.add("stick");
+   stick.classList.add("underground");
+ 
+
+  moveback.append(stick);
+  stick.append(rotate);
+  stick.style.transform = `translate3d( ${arrowx + momentum}px, ${arrowy + momentumY}px, 0 )`;
+  rotate.style.transform = 'rotate('+arrowangle+'deg)';
+  stick.style.zIndex = "0";
+  rotate.style.zIndex = "0";
+
+}
+
+}
+
+function vectorNormalize(){
+
+if(left===1 && up ===1 || left === 1 && down ===1 || right===1 && up ===1 || right === 1 && down ===1 ){
+
+
+   speed = 4;
+
+}
+
+else{
+
+   speed = 5;
+}
+}
+
+
+
+// setInterval(refresh, 5000)
+
+// function refresh(){
+
+// location.reload()
+
+
+
+// }

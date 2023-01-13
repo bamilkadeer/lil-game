@@ -51,6 +51,7 @@ position: absolute;
     height: 40px;
 top: 10px;
 left:16px;
+
 border: 1px solid salmon;
 }
 
@@ -201,7 +202,7 @@ margin: 0px;
     border: 2px solid salmon;
  
     transform-origin: bottom center;
-    z-index: 1;
+    /* z-index: 1; */
 }
 
 .follow{
@@ -294,3 +295,36 @@ border: 3px solid salmon;
 top: calc(50vh );
 left:calc(50vw );
 }
+
+.stick{
+    position:absolute;
+    padding: 0px;
+margin: 0px;
+    width: 30px;
+    height: 30px;
+    background-image: url("thickarrowPNG.PNG");
+    image-rendering: pixelated;
+    background-size: 100%;
+    transform-origin: center;
+    top: calc(50vh - 15px);
+left:calc(50vw - 15px);
+
+
+transform: translate(-50% , -50% );
+
+transition: all 3s linear;
+
+
+
+
+}
+.underground{
+    position:absolute;
+    z-index: 0;
+}
+
+.moveback{
+
+    z-index: 0;
+}
+
