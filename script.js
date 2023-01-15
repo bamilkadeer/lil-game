@@ -37,15 +37,18 @@ let arrowbox = document.querySelector('.arrowbox');
 let moveback = document.querySelector('.moveback');
 let arrowangle;
 
+let bow = document.querySelector(".sprite");
+
 let rotate = document.querySelector('.rotate');
 
 let enemy = document.querySelector('.enemy');
+let enemySprite = document.querySelector('.enemysprite');
 
 let viewportHeight = window.innerHeight;
 let viewportWidth = window.innerWidth;
 
 //enemy variables
-let enemySpeedY = 0.02;
+let enemySpeedY = 0.008;
 let enemySpeedX = 0.008;
 let enemyY = 0;
 let enemyX = 200;
@@ -133,7 +136,7 @@ setInterval(time, 2000);
 function time (){
 
    setTimeout(EnemyProjectiles, randomNumber(1000,2000));
-   console.log('go')
+   // console.log('go')
 }
 
 
@@ -170,8 +173,8 @@ let enemyProjectile = projectile.update();
     Characterhealth =  new CharacterHealth(change).updateHealth(-1);
      new CharacterHealth(change).renderHealth();
  
-      console.log('hit');
-      console.log(Characterhealth);
+      // console.log('hit');
+      // console.log(Characterhealth);
 
        }
        
@@ -209,6 +212,8 @@ vectorNormalize();
    if (left === 1) {x -= speed - slow; lastHeldDirectionX = "left"; }
    if (up === 1) {y -= speed - slow; lastHeldDirectionY = "up";}
    if (down === 1) {y += speed - slow; lastHeldDirectionY = "down";}
+   
+   barriers()
 
    MomentumCalculations()
 
@@ -237,6 +242,7 @@ vectorNormalize();
     viewportWidth = window.innerWidth;
     
 arrowcalculations()
+bowAnimation()
 stick()
 
 //checks if character is moving 
@@ -263,7 +269,7 @@ facts = "false";
 placeEnemy()
 placeMushroom()
 
-
+enemyDirection()
  }
  
 
@@ -527,12 +533,12 @@ enemyX += enemySpeedX *enemyVelocity.x;
    
 
    if(y - enemyY < 0){
-      enemyY += enemySpeedY * (y - enemyY + 130);
+      enemyY += enemySpeedY * (y - enemyY + 30);
       
        }
     
        if(y - enemyY > 0){
-          enemyY += enemySpeedY * (y - enemyY - 130);
+          enemyY += enemySpeedY * (y - enemyY - 30);
            }
 
    if(x - enemyX < 0){
@@ -630,8 +636,8 @@ enemy.style.backgroundColor = "white";
    health =  new Health(change).updateHealth(-10);
     new Health(change).renderHealth();
 
-     console.log('hit');
-     console.log(health);
+   //   console.log('hit');
+   //   console.log(health);
      counter = 0;
      arrowDistance = 0;
      arrowpicture.style.display = "none";
@@ -711,3 +717,69 @@ else{
 
 
 // }
+
+
+
+function bowAnimation(){
+   if(arrowDistance >40 && arrowDistance<55){
+         bow.classList.remove("sprite2");
+      bow.classList.remove("sprite3");
+      bow.classList.remove("sprite4");
+     bow.classList.add("sprite1");
+ }
+   
+ if(arrowDistance >= 55 && arrowDistance<70){
+     bow.classList.add("sprite2");
+ }
+   if(arrowDistance >= 70 && arrowDistance<85){
+     bow.classList.add("sprite3");
+ }
+   if(arrowDistance >= 85 ){
+     bow.classList.add("sprite4");
+ }
+
+ }
+ 
+
+ function enemyDirection(){
+
+
+if (x > enemyX + 50){
+   enemySprite.setAttribute("facing", "right");
+   enemySprite.classList.add("right");
+
+}
+
+else{
+   enemySprite.setAttribute("facing", "left");
+   enemySprite.classList.remove("right");
+}
+
+ }
+
+
+
+ function barriers(){
+
+   // x = x >= 695 ? 695 : x - momentum;
+
+   // x = x <= -10 ? -10 : x - momentum;
+
+   // y = y >= 415 ? 415 : y - momentumY;
+
+   // y = y <= -15 ? -15 : y - momentumY;
+
+   x = x >= 695 ? 695 : x ;
+
+   x = x <= -10 ? -10 : x;
+
+   y = y >= 415 ? 415 : y ;
+
+   y = y <= -15 ? -15 : y ;
+
+
+   
+
+
+
+ }

@@ -18,7 +18,10 @@
     --character-bar-top: #18ff52;
  }
 
-
+*{
+/* 
+    border: 1px solid salmon; */
+}
 body{
 padding: 0;
 margin:0;
@@ -127,6 +130,43 @@ border: 1px solid salmon;
 
 
 
+.bow{
+
+    position: absolute;
+    background: url("bow\ up.PNG") ;
+    background-size: 100%;
+    width: 200px;
+    height: 50px;
+    image-rendering: pixelated;
+}
+
+
+
+.sprite1 {
+
+    transform: translate3d(-0%,0%,0);
+}
+
+.sprite2 {
+
+       transform: translate3d(-25%,0%,0);
+  
+}
+
+.sprite3 {
+
+      transform: translate3d(-50%,0%,0);
+}
+
+.sprite4 {
+  
+
+    transform: translate3d(-75%,0%,0);
+}
+
+
+
+
 
 
 .sword{
@@ -136,16 +176,19 @@ border: 1px solid salmon;
     width: 50px;
     height: 50px;
  
-    transform-origin: bottom center;
-    background-image: url("bow.png");
+    /* transform-origin: bottom center; */
+    /* background-image: url("bow.png"); */
     image-rendering: pixelated;
     background-size: 100%;
+    border: 1px solid salmon;
+    overflow: hidden;
 
 
 }
+
 .swordbox{
     position:absolute;
-        top:calc(50vh - 50px);
+        top:calc(50vh - 25px);
         left:calc(50vw - 25px);
       
         transform-origin: bottom center;
@@ -233,11 +276,44 @@ margin: 0px;
     top: calc(50vh );
     left:calc(50vw );
 
-    background-image: url("angel\ enemy.PNG");
+    /* background-image: url("angel\ enemy.PNG"); */
     image-rendering: pixelated;
     background-size: 100%;
+    overflow: hidden;
+    z-index: 1;
 
 }
+.enemysprite{
+
+        position: absolute;
+        background: url("enemyspriteleft.PNG") ;
+        background-size: 100%;
+        width: 800px;
+        height: 100px;
+        image-rendering: pixelated;
+
+}
+.enemysprite [facing="right"]{
+    background: url("enemyspriterightPNG.PNG") ;
+}
+.right{
+
+    background: url("enemyspriterightPNG.PNG") ;
+
+}
+
+.enemysprite {
+    animation: enemyAnimation 0.9s steps(8) infinite; 
+ }
+ 
+ @keyframes enemyAnimation {
+   from {
+     transform: translate3d(0%,0%,0);
+   }
+   to {
+     transform: translate3d(-100%,0%,0);
+   }
+ }
 
 /* .healthbarbox{
 
@@ -302,7 +378,7 @@ left:calc(50vw );
 margin: 0px;
     width: 30px;
     height: 30px;
-    background-image: url("thickarrowPNG.PNG");
+    background-image: url("arrow\ in\ ground.PNG");
     image-rendering: pixelated;
     background-size: 100%;
     transform-origin: center;
@@ -312,7 +388,7 @@ left:calc(50vw - 15px);
 
 transform: translate(-50% , -50% );
 
-transition: all 3s linear;
+/* transition: all 3s linear; */
 
 
 
@@ -328,3 +404,16 @@ transition: all 3s linear;
     z-index: 0;
 }
 
+.characterShadow{
+
+
+position:absolute;
+background-color: black;
+top:40px;
+left:30px;
+width: 60px;
+height: 20px;
+opacity: .3;;
+
+
+}
