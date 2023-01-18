@@ -5,6 +5,16 @@ import Projectile from "./enemyprojectile.js";
 // let projectiles=[];
 
 
+
+let start = false;
+let startScreen = document.querySelector('.startscreen');
+let death = false;
+
+let restartButton = document.querySelector('.buttonRestart');
+
+let restartBox = document.querySelector('.restartBox');
+let winOrLose = document.querySelector('.winOrLose');
+
 var health = 100;
 
 let Characterhealth = 100;
@@ -270,6 +280,7 @@ placeEnemy()
 placeMushroom()
 
 enemyDirection()
+deathCheck()
  }
  
 
@@ -313,9 +324,8 @@ enemyDirection()
                         break
 
                         case ' ':
-        
-                           bulletCheck = 1;
-               
+        startscreen();
+              
                            break
     }
    //  console.log(lastHeldDirectionX)
@@ -369,7 +379,8 @@ window.addEventListener
 
 //game loop
  const step = () => {
-    placeCharacter();
+   if(start && !death){placeCharacter();}
+    
     window.requestAnimationFrame(() => {
        step();
     })
@@ -630,7 +641,7 @@ function arrowcalculations(){
    if (arrowx + 10 >=  + enemyX     &&  
      arrowx        <=  + 100 + enemyX &&
      arrowy + 10   >=  + enemyY    &&
-     arrowy        <=  + 100 + enemyY && health > 0){
+     arrowy        <=  + 100 + enemyY && health > 0 && arrowDistance>0){
 enemy.style.backgroundColor = "white";
    
    health =  new Health(change).updateHealth(-10);
@@ -776,10 +787,42 @@ else{
    y = y >= 415 ? 415 : y ;
 
    y = y <= -15 ? -15 : y ;
+ }
 
 
-   
 
 
+
+ function startscreen(){
+
+start = true;
+
+// startScreen.style.opacity = "0";
+startScreen.style.display = "none";
 
  }
+
+ function deathCheck(){
+
+if(health <= 0 ){
+   winOrLose.innerHTML="yay you won!!!"
+restartBox.classList.add("deathScreen");
+restartButton.classList.add("restartButton");
+   death = true;
+}
+if(Characterhealth <= 0){
+
+   restartBox.classList.add("deathScreen");
+restartButton.classList.add("restartButton");
+   death = true;
+}
+
+ }
+
+
+ restartButton.addEventListener("click", event => {
+
+    location.reload()
+  
+
+ })
