@@ -1,6 +1,135 @@
-import Health from "./health.js";
-import CharacterHealth from "./CharacterHealth.js";
-import Projectile from "./enemyprojectile.js";
+
+
+
+var health = 100;
+var maxHp = 100;
+var fills = document.querySelectorAll(".character_healthbar_fill");
+
+
+
+
+
+
+class CharacterHealth{
+
+constructor(change){
+
+this.change = change;
+
+}
+updateHealth(change) {
+    
+    health += change;
+    health = health > maxHp ? maxHp : health;
+    health = health < 0 ? 0 : health;
+ 
+    // console.log(health);
+    return health
+ }
+ 
+ renderHealth (){
+   var percent = health / maxHp * 100;
+     fills.forEach(fill => {
+       fill.style.width = percent+"%";})
+   
+ }
+ 
+ 
+
+
+}
+
+
+
+//enemy health
+var enemyhealth = 100;
+var maxHp = 100;
+var enemyfills = document.querySelectorAll(".healthbar_fill");
+
+
+
+
+
+
+class Health{
+
+constructor(change){
+
+this.change = change;
+
+}
+updateHealth(change) {
+    
+    enemyhealth += change;
+    enemyhealth = enemyhealth > maxHp ? maxHp : enemyhealth;
+    enemyhealth = enemyhealth < 0 ? 0 : enemyhealth;
+ 
+    // console.log(health);
+    return enemyhealth
+ }
+ 
+ renderHealth (){
+   var percent = enemyhealth / maxHp * 100;
+     enemyfills.forEach(fill => {
+       fill.style.width = percent+"%";})
+   
+ }
+ 
+ 
+
+
+}
+
+
+
+
+
+//enemy projectile
+let bullet = document.createElement("div");
+
+
+let position;
+
+class Projectile {
+
+   constructor(enemyX , enemyY, velocity){
+   
+   
+   this.x = enemyX;
+   this.y = enemyY;
+   this.velocity = velocity;
+   
+   
+   }
+   
+   
+   draw(){
+   
+   bullet.classList.add("enemyprojectile");
+   
+   
+     center.append(bullet);
+   
+   }
+   
+   update(){
+   this.draw()
+   this.x = this.x + this.velocity.x;
+   this.y = this.y + this.velocity.y; 
+   bullet.style.transform = `translate3d( ${this.x}px, ${this.y}px, 0 )`;
+   position = {x:this.x,y: this.y}
+   return position
+   }
+   }
+   
+   
+   
+
+
+
+// import Health from "./health.js";
+// import CharacterHealth from "./CharacterHealth.js";
+// import Projectile from "./enemyprojectile.js";
 
 // let projectiles=[];
 
@@ -20,7 +149,7 @@ var health = 100;
 let Characterhealth = 100;
 let change = 0;
 
-var fills = document.querySelectorAll(".healthbar_fill");
+var enemyfills = document.querySelectorAll(".healthbar_fill");
 
 
 
@@ -644,7 +773,7 @@ function arrowcalculations(){
      arrowy        <=  + 100 + enemyY && health > 0 && arrowDistance>0){
 enemy.style.backgroundColor = "white";
    
-   health =  new Health(change).updateHealth(-10);
+   enemyhealth =  new Health(change).updateHealth(-10);
     new Health(change).renderHealth();
 
    //   console.log('hit');
@@ -804,13 +933,13 @@ startScreen.style.display = "none";
 
  function deathCheck(){
 
-if(health <= 0 ){
+if(enemyhealth <= 0 ){
    winOrLose.innerHTML="yay you won!!!"
 restartBox.classList.add("deathScreen");
 restartButton.classList.add("restartButton");
    death = true;
 }
-if(Characterhealth <= 0){
+if(health <= 0){
 
    restartBox.classList.add("deathScreen");
 restartButton.classList.add("restartButton");
